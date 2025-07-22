@@ -11,7 +11,9 @@ export function useMemo<T>(factory: () => T, _deps: DependencyList, _equals = sh
     value: undefined,
   });
 
-  if (!ref.current.deps || !_equals(ref.current.deps, _deps)) {
+  const shouldRecompute = !ref.current.deps || !_equals(ref.current.deps, _deps);
+
+  if (shouldRecompute) {
     ref.current.deps = _deps;
     ref.current.value = factory();
   }
